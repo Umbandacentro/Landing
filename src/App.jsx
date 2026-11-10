@@ -1,30 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Heart, 
-  ShoppingBag, 
-  Sparkles, 
-  MessageCircle, 
-  CheckCircle2, 
-  Send, 
-  Scissors, 
-  Settings, 
-  RotateCcw, 
-  Save, 
-  Plus, 
-  Trash2, 
-  Image as ImageIcon, 
-  Type, 
-  LayoutGrid, 
-  Phone, 
-  Instagram, 
-  ExternalLink,
-  ChevronRight,
-  Sun,
-  Moon,
-  Award,
-  Package,
-  Truck
-} from 'lucide-react';
 
 // --- DADOS PADRÃO DO ATELIER CLÉO PEREIRA ---
 const DEFAULT_CLEO_CONTENT = {
@@ -121,7 +95,6 @@ const DEFAULT_CLEO_CONTENT = {
   }
 };
 
-// Imagens Predefinidas para facilidade no CMS
 const CRAFT_PRESET_IMAGES = [
   { label: "Kit SPA Toalhas", url: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200" },
   { label: "Costura & Linhas", url: "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&q=80&w=800" },
@@ -131,7 +104,7 @@ const CRAFT_PRESET_IMAGES = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('landing'); // 'landing' | 'admin'
+  const [activeTab, setActiveTab] = useState('landing');
   const [content, setContent] = useState(() => {
     try {
       const saved = localStorage.getItem('cleo_atelier_content');
@@ -166,7 +139,6 @@ export default function App() {
     setTimeout(() => setNotification(''), 3500);
   };
 
-  // Gerador de Link do WhatsApp Dinâmico
   const getWhatsappUrl = (customText) => {
     const cleanNum = content.header.whatsappNumber.replace(/\D/g, '');
     const defaultMsg = encodeURIComponent(customText || "Olá Cléo! Vi o site do Atelier e gostaria de encomendar um kit exclusivo.");
@@ -176,15 +148,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-amber-950 font-sans selection:bg-rose-200 selection:text-rose-950">
       
-      {/* BARRA SUPERIOR DE NAVEGAÇÃO E NÍVEL DE SISTEMA */}
+      {/* BARRA SUPERIOR */}
       <nav className="sticky top-0 z-50 bg-[#F5EFE6]/95 backdrop-blur-md border-b border-amber-900/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
-            {/* Logo do Atelier */}
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-rose-700/10 border border-rose-700/30 flex items-center justify-center text-rose-800 shadow-inner">
-                <Scissors className="w-5 h-5" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path></svg>
               </div>
               <div>
                 <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-amber-950 block leading-none">
@@ -196,7 +167,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Links da Landing Page (Desk) */}
             {activeTab === 'landing' && (
               <div className="hidden lg:flex items-center space-x-6 text-xs uppercase tracking-widest font-semibold text-amber-900/70">
                 <a href="#sobre" className="hover:text-rose-800 transition-colors">Sobre</a>
@@ -207,15 +177,12 @@ export default function App() {
               </div>
             )}
 
-            {/* Alternador Landing / Admin */}
             <div className="flex items-center space-x-2">
               <div className="flex bg-amber-900/5 p-1 rounded-full border border-amber-900/10">
                 <button
                   onClick={() => setActiveTab('landing')}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    activeTab === 'landing'
-                      ? 'bg-rose-800 text-white shadow-md'
-                      : 'text-amber-900/70 hover:text-amber-950'
+                    activeTab === 'landing' ? 'bg-rose-800 text-white shadow-md' : 'text-amber-900/70 hover:text-amber-950'
                   }`}
                 >
                   Ver Site
@@ -223,17 +190,14 @@ export default function App() {
                 <button
                   onClick={() => setActiveTab('admin')}
                   className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    activeTab === 'admin'
-                      ? 'bg-rose-800 text-white shadow-md'
-                      : 'text-amber-900/70 hover:text-amber-950'
+                    activeTab === 'admin' ? 'bg-rose-800 text-white shadow-md' : 'text-amber-900/70 hover:text-amber-950'
                   }`}
                 >
-                  <Settings className="w-3.5 h-3.5" />
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                   <span>Painel Admin</span>
                 </button>
               </div>
 
-              {/* Botão WhatsApp Rápido no Header */}
               {activeTab === 'landing' && (
                 <a
                   href={getWhatsappUrl()}
@@ -241,7 +205,7 @@ export default function App() {
                   rel="noreferrer"
                   className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md shadow-emerald-700/20 transition-all hover:scale-105"
                 >
-                  <MessageCircle className="w-4 h-4 fill-current" />
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                   <span>{content.header.whatsappLabel}</span>
                 </a>
               )}
@@ -251,28 +215,17 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-2 px-4 py-3 bg-amber-950 text-rose-200 rounded-2xl shadow-2xl border border-rose-800/40 animate-bounce text-xs font-medium">
-          <Sparkles className="w-4 h-4 text-rose-400" />
-          <span>{notification}</span>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-2 px-4 py-3 bg-amber-950 text-rose-200 rounded-2xl shadow-2xl border border-rose-800/40 text-xs font-medium">
+          <span>✨ {notification}</span>
         </div>
       )}
 
-      {/* RENDERIZAÇÃO DA VISÃO SELECIONADA */}
       <main>
         {activeTab === 'landing' ? (
-          <LandingPage 
-            content={content} 
-            getWhatsappUrl={getWhatsappUrl} 
-            onOpenAdmin={() => setActiveTab('admin')} 
-          />
+          <LandingPage content={content} getWhatsappUrl={getWhatsappUrl} onOpenAdmin={() => setActiveTab('admin')} />
         ) : (
-          <AdminPanel 
-            content={content} 
-            onSave={handleSave} 
-            onReset={handleReset} 
-          />
+          <AdminPanel content={content} onSave={handleSave} onReset={handleReset} />
         )}
       </main>
 
@@ -280,36 +233,30 @@ export default function App() {
   );
 }
 
-// =========================================================================
-// COMPONENTE 1: LANDING PAGE COMPLETA (ATELIER CLÉO PEREIRA)
-// =========================================================================
 function LandingPage({ content, getWhatsappUrl, onOpenAdmin }) {
   const { hero, about, services, forWhom, howItWorks, differentials, ctaBanner, footer } = content;
 
   return (
     <div className="relative overflow-hidden">
       
-      {/* Botão Flutuante de Edição para o Dono */}
       <button
         onClick={onOpenAdmin}
-        className="fixed bottom-6 left-6 z-40 flex items-center space-x-2 px-4 py-2.5 bg-amber-950/90 text-amber-100 backdrop-blur-md text-xs font-semibold rounded-full shadow-2xl border border-amber-700/40 hover:bg-rose-900 transition-all group"
+        className="fixed bottom-6 left-6 z-40 flex items-center space-x-2 px-4 py-2.5 bg-amber-950/90 text-amber-100 backdrop-blur-md text-xs font-semibold rounded-full shadow-2xl border border-amber-700/40 hover:bg-rose-900 transition-all"
       >
-        <Settings className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
-        <span>Editar Conteúdo</span>
+        <span>⚙️ Editar Conteúdo</span>
       </button>
 
-      {/* Botão Flutuante do WhatsApp */}
       <a
         href={getWhatsappUrl("Olá Cléo! Vim pelo botão do site e quero saber mais sobre suas peças.")}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white p-4 rounded-full shadow-2xl shadow-emerald-600/40 transition-transform hover:scale-110 flex items-center justify-center border-2 border-white"
+        className="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center border-2 border-white"
         title="Falar no WhatsApp"
       >
-        <MessageCircle className="w-7 h-7 fill-current" />
+        <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
       </a>
 
-      {/* --- HERO SECTION --- */}
+      {/* HERO SECTION */}
       <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-[#F5EFE6] to-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -317,7 +264,7 @@ function LandingPage({ content, getWhatsappUrl, onOpenAdmin }) {
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               {hero.badge && (
                 <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-rose-900/10 border border-rose-900/20 text-rose-900 text-xs font-semibold uppercase tracking-widest">
-                  <Heart className="w-3.5 h-3.5 fill-rose-800 text-rose-800" />
+                  <span>❤️</span>
                   <span>{hero.badge}</span>
                 </div>
               )}
@@ -335,39 +282,18 @@ function LandingPage({ content, getWhatsappUrl, onOpenAdmin }) {
                   href={getWhatsappUrl("Olá Cléo! Quero encomendar um Kit SPA exclusivo.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-full shadow-xl shadow-emerald-700/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 group uppercase tracking-wider"
+                  className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-full shadow-xl transition-all flex items-center justify-center space-x-2 uppercase tracking-wider"
                 >
-                  <MessageCircle className="w-5 h-5 fill-current" />
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                   <span>{hero.ctaText}</span>
                 </a>
               </div>
-
-              <div className="pt-6 flex items-center justify-center lg:justify-start space-x-6 text-xs text-amber-900/60 font-medium">
-                <span className="flex items-center space-x-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-rose-700" />
-                  <span>Tecidos Macios</span>
-                </span>
-                <span className="flex items-center space-x-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-rose-700" />
-                  <span>Envio para Todo Brasil</span>
-                </span>
-              </div>
             </div>
 
-            {/* Imagem do Hero */}
             <div className="lg:col-span-5">
               <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-rose-200 to-amber-200 opacity-60 blur-lg"></div>
                 <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-white">
-                  <img 
-                    src={hero.bgImage} 
-                    alt="Kit SPA Cléo Pereira" 
-                    className="w-full h-[420px] object-cover object-center transform hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-amber-900/10 text-center shadow-lg">
-                    <p className="font-serif text-sm font-bold text-amber-950">Feito sob medida para o seu bem-estar</p>
-                    <p className="text-[11px] text-amber-800">Escolha as estampas e os detalhes pelo WhatsApp</p>
-                  </div>
+                  <img src={hero.bgImage} alt="Kit SPA Cléo Pereira" className="w-full h-[420px] object-cover object-center" />
                 </div>
               </div>
             </div>
@@ -376,277 +302,148 @@ function LandingPage({ content, getWhatsappUrl, onOpenAdmin }) {
         </div>
       </section>
 
-      {/* --- SEÇÃO SOBRE --- */}
+      {/* SOBRE */}
       <section id="sobre" className="py-20 bg-white border-y border-amber-900/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Foto da Cléo */}
             <div className="lg:col-span-5">
-              <div className="relative">
-                <img 
-                  src={about.imageUrl} 
-                  alt="Cléo Pereira" 
-                  className="rounded-3xl shadow-2xl object-cover w-full h-[460px] border-8 border-[#FAF7F2]"
-                />
-                <div className="absolute -bottom-6 -right-6 bg-rose-900 text-white p-6 rounded-3xl shadow-xl hidden sm:block border-4 border-white">
-                  <p className="font-serif text-3xl font-bold">{about.experienceYears}</p>
-                  <p className="text-xs text-rose-200 max-w-[120px] leading-snug">{about.experienceText}</p>
-                </div>
-              </div>
+              <img src={about.imageUrl} alt="Cléo Pereira" className="rounded-3xl shadow-2xl object-cover w-full h-[460px] border-8 border-[#FAF7F2]" />
             </div>
-
-            {/* Texto Sobre */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-rose-800 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
-                Artesã & Criadora
-              </span>
-              
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950 tracking-tight">
-                {about.title}
-              </h2>
-
-              <p className="text-rose-900/80 font-medium italic text-lg">
-                "{about.subtitle}"
-              </p>
-
+              <span className="text-xs font-bold uppercase tracking-widest text-rose-800 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">Artesã & Criadora</span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{about.title}</h2>
+              <p className="text-rose-900/80 font-medium italic text-lg">"{about.subtitle}"</p>
               <div className="space-y-4 text-amber-900/80 leading-relaxed font-light text-base">
                 <p>{about.paragraph1}</p>
                 <p>{about.paragraph2}</p>
               </div>
-
-              <div className="pt-4 flex items-center space-x-4">
-                <a
-                  href={getWhatsappUrl("Olá Cléo! Gostaria de conversar sobre um projeto de costura sob encomenda.")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-6 py-3 bg-amber-950 hover:bg-amber-900 text-amber-100 text-xs font-bold uppercase tracking-wider rounded-full shadow-lg transition-all"
-                >
-                  Conhecer meu Trabalho
-                </a>
-              </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* --- SEÇÃO SERVIÇOS / KITS --- */}
+      {/* SERVIÇOS */}
       <section id="servicos" className="py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Catálogo do Atelier</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">Peças feitas sob encomenda</h2>
-            <p className="text-amber-900/70 text-sm">
-              Cada produto é confeccionado individualmente com estampas e tamanhos à sua escolha.
-            </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((item) => (
-              <div 
-                key={item.id}
-                className="bg-white rounded-3xl overflow-hidden border border-amber-900/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group"
-              >
+              <div key={item.id} className="bg-white rounded-3xl overflow-hidden border border-amber-900/10 shadow-lg flex flex-col group">
                 <div className="relative h-56 overflow-hidden">
-                  <img 
-                    src={item.imageUrl} 
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  {item.tag && (
-                    <span className="absolute top-3 right-3 bg-rose-800 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-md">
-                      {item.tag}
-                    </span>
-                  )}
+                  <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  {item.tag && <span className="absolute top-3 right-3 bg-rose-800 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full">{item.tag}</span>}
                 </div>
-
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="font-serif text-lg font-bold text-amber-950 group-hover:text-rose-800 transition-colors mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-amber-900/70 leading-relaxed font-light">
-                      {item.description}
-                    </p>
+                    <h3 className="font-serif text-lg font-bold text-amber-950 mb-2">{item.title}</h3>
+                    <p className="text-xs text-amber-900/70">{item.description}</p>
                   </div>
-
-                  <a
-                    href={getWhatsappUrl(`Olá Cléo! Tenho interesse no ${item.title}. Pode me passar os detalhes?`)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="pt-3 border-t border-amber-900/5 flex items-center justify-between text-xs font-bold text-emerald-700 hover:text-emerald-800"
-                  >
-                    <span>Pedir pelo WhatsApp</span>
-                    <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  <a href={getWhatsappUrl(`Olá Cléo! Tenho interesse no ${item.title}.`)} target="_blank" rel="noreferrer" className="pt-3 border-t text-xs font-bold text-emerald-700">Pedir pelo WhatsApp →</a>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* --- SEÇÃO "PARA QUEM É" --- */}
+      {/* PARA QUEM É */}
       <section id="para-quem" className="py-20 bg-rose-950 text-rose-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-rose-300">Carinho em Cada Traço</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">{forWhom.title}</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {forWhom.items.map((w, idx) => (
-              <div key={w.id || idx} className="bg-rose-900/40 border border-rose-800/60 p-8 rounded-3xl space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-rose-800/60 border border-rose-700/60 flex items-center justify-center text-rose-200">
-                  <Heart className="w-6 h-6 fill-rose-300" />
-                </div>
-                <h3 className="font-serif text-xl font-bold text-white">{w.title}</h3>
-                <p className="text-xs text-rose-200/80 leading-relaxed font-light">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">{forWhom.title}</h2>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {forWhom.items.map((w, idx) => (
+            <div key={w.id || idx} className="bg-rose-900/40 border border-rose-800/60 p-8 rounded-3xl space-y-4">
+              <h3 className="font-serif text-xl font-bold text-white">{w.title}</h3>
+              <p className="text-xs text-rose-200/80">{w.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* --- SEÇÃO "COMO FUNCIONA" --- */}
+      {/* COMO FUNCIONA */}
       <section id="como-funciona" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Passo a Passo</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{howItWorks.title}</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {howItWorks.steps.map((st, i) => (
-              <div key={i} className="relative p-8 rounded-3xl bg-[#FAF7F2] border border-amber-900/10 space-y-4">
-                <span className="font-serif text-4xl font-bold text-rose-800/30 block">{st.step}</span>
-                <h3 className="font-serif text-lg font-bold text-amber-950">{st.title}</h3>
-                <p className="text-xs text-amber-900/70 leading-relaxed font-light">{st.desc}</p>
-              </div>
-            ))}
-          </div>
-
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{howItWorks.title}</h2>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {howItWorks.steps.map((st, i) => (
+            <div key={i} className="p-8 rounded-3xl bg-[#FAF7F2] border border-amber-900/10 space-y-4">
+              <span className="font-serif text-4xl font-bold text-rose-800/30">{st.step}</span>
+              <h3 className="font-serif text-lg font-bold text-amber-950">{st.title}</h3>
+              <p className="text-xs text-amber-900/70">{st.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* --- SEÇÃO DIFERENCIAIS --- */}
+      {/* DIFERENCIAIS */}
       <section id="diferenciais" className="py-20 bg-[#FAF7F2] border-t border-amber-900/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Diferenciais do Atelier</span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{differentials.title}</h2>
-              <p className="text-sm text-amber-900/70">{differentials.subtitle}</p>
-
-              <ul className="space-y-4 pt-2">
-                {differentials.list.map((item, index) => (
-                  <li key={index} className="flex items-start space-x-3 text-xs sm:text-sm text-amber-900 font-medium">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="lg:col-span-6">
-              <img 
-                src={differentials.imageUrl} 
-                alt="Diferenciais Artesanais" 
-                className="rounded-3xl shadow-xl object-cover w-full h-[400px] border-4 border-white"
-              />
-            </div>
-
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6 space-y-6">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{differentials.title}</h2>
+            <ul className="space-y-4 pt-2">
+              {differentials.list.map((item, index) => (
+                <li key={index} className="flex items-start space-x-3 text-xs sm:text-sm text-amber-900 font-medium">
+                  <span className="text-emerald-700 font-bold">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:col-span-6">
+            <img src={differentials.imageUrl} alt="Diferenciais" className="rounded-3xl shadow-xl object-cover w-full h-[400px]" />
           </div>
         </div>
       </section>
 
-      {/* --- BANNER CTA FINAL --- */}
+      {/* CTA BANNER */}
       <section className="py-20 bg-gradient-to-r from-rose-900 to-amber-950 text-white text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <Sparkles className="w-8 h-8 text-rose-300 mx-auto animate-pulse" />
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight">{ctaBanner.title}</h2>
-          <p className="text-rose-200 text-base max-w-xl mx-auto font-light">{ctaBanner.subtitle}</p>
-          <div className="pt-4">
-            <a
-              href={getWhatsappUrl("Olá Cléo! Vi a frase no final do site e quero montar meu presente sob medida!")}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center space-x-3 px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-full shadow-2xl transition-transform hover:scale-105 uppercase tracking-wider"
-            >
-              <MessageCircle className="w-5 h-5 fill-current" />
-              <span>{ctaBanner.buttonText}</span>
-            </a>
-          </div>
+        <div className="max-w-4xl mx-auto px-4 space-y-6">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold">{ctaBanner.title}</h2>
+          <p className="text-rose-200 text-base">{ctaBanner.subtitle}</p>
+          <a href={getWhatsappUrl()} target="_blank" rel="noreferrer" className="inline-flex items-center space-x-3 px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-full shadow-2xl uppercase tracking-wider">
+            <span>{ctaBanner.buttonText}</span>
+          </a>
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
+      {/* FOOTER */}
       <footer className="bg-amber-950 text-amber-200/80 py-12 border-t border-amber-900/40 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-amber-900/40">
-            <div>
-              <p className="font-serif text-lg font-bold text-white mb-2">{content.header.atelierName}</p>
-              <p className="text-amber-300/70 font-light leading-relaxed">{content.header.tagline}</p>
-            </div>
-
-            <div>
-              <p className="font-bold text-white uppercase tracking-wider mb-2">Contato & Redes</p>
-              <ul className="space-y-2">
-                <li>
-                  <a href={footer.instagramUrl} target="_blank" rel="noreferrer" className="flex items-center space-x-2 hover:text-white">
-                    <Instagram className="w-4 h-4 text-rose-400" />
-                    <span>{footer.instagram}</span>
-                  </a>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 text-rose-400" />
-                  <span>WhatsApp: {content.header.whatsappNumber}</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-bold text-white uppercase tracking-wider mb-2">Atendimento</p>
-              <p className="font-light">{footer.address}</p>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-amber-900/40">
+          <div>
+            <p className="font-serif text-lg font-bold text-white mb-2">{content.header.atelierName}</p>
+            <p className="text-amber-300/70">{content.header.tagline}</p>
           </div>
-
-          <div className="pt-8 text-center text-amber-400/50">
-            <p>{footer.copyright}</p>
+          <div>
+            <p className="font-bold text-white uppercase mb-2">Contato</p>
+            <p>WhatsApp: {content.header.whatsappNumber}</p>
+            <p className="mt-1">{footer.instagram}</p>
           </div>
+          <div>
+            <p className="font-bold text-white uppercase mb-2">Atendimento</p>
+            <p>{footer.address}</p>
+          </div>
+        </div>
+        <div className="pt-8 text-center text-amber-400/50">
+          <p>{footer.copyright}</p>
         </div>
       </footer>
-
     </div>
   );
 }
 
-// =========================================================================
-// COMPONENTE 2: PAINEL DE ADMINISTRAÇÃO (CMS)
-// =========================================================================
 function AdminPanel({ content, onSave, onReset }) {
   const [formData, setFormData] = useState(content);
   const [activeTab, setActiveTab] = useState('hero');
 
-  useEffect(() => {
-    setFormData(content);
-  }, [content]);
+  useEffect(() => { setFormData(content); }, [content]);
 
   const handleChange = (section, field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
+    setFormData(prev => ({ ...prev, [section]: { ...prev[section], [field]: value } }));
   };
 
   const handleServiceChange = (id, field, value) => {
@@ -660,25 +457,19 @@ function AdminPanel({ content, onSave, onReset }) {
     const newService = {
       id: Date.now().toString(),
       title: "Nova Peça Artesanal",
-      description: "Descrição detalhada do novo produto feito sob encomenda.",
+      description: "Descrição detalhada do novo produto.",
       imageUrl: CRAFT_PRESET_IMAGES[0].url,
       tag: "Novo"
     };
-    setFormData(prev => ({
-      ...prev,
-      services: [...prev.services, newService]
-    }));
+    setFormData(prev => ({ ...prev, services: [...prev.services, newService] }));
   };
 
   const handleDeleteService = (id) => {
     if (formData.services.length <= 1) {
-      alert("O site precisa manter ao menos 1 peça no catálogo.");
+      alert("O site precisa manter ao menos 1 peça.");
       return;
     }
-    setFormData(prev => ({
-      ...prev,
-      services: prev.services.filter(s => s.id !== id)
-    }));
+    setFormData(prev => ({ ...prev, services: prev.services.filter(s => s.id !== id) }));
   };
 
   const handleSubmit = (e) => {
@@ -688,353 +479,109 @@ function AdminPanel({ content, onSave, onReset }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      
-      {/* Cabeçalho Admin */}
       <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-amber-900/10 gap-4">
         <div>
           <h1 className="font-serif text-2xl font-bold text-amber-950 flex items-center space-x-2">
-            <Settings className="w-6 h-6 text-rose-800" />
-            <span>Painel CMS - Atelier Cléo Pereira</span>
+            <span>⚙️ Painel CMS - Atelier Cléo Pereira</span>
           </h1>
-          <p className="text-xs text-amber-900/70 mt-1">
-            Altere qualquer texto, imagem ou número do WhatsApp em tempo real.
-          </p>
+          <p className="text-xs text-amber-900/70 mt-1">Altere textos, imagens ou WhatsApp em tempo real.</p>
         </div>
-
         <div className="flex items-center space-x-3">
-          <button
-            onClick={onReset}
-            className="px-4 py-2 text-xs font-semibold text-rose-800 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors flex items-center space-x-1.5"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Restaurar Originais</span>
-          </button>
-
-          <button
-            onClick={handleSubmit}
-            className="px-6 py-2.5 bg-rose-800 hover:bg-rose-900 text-white font-bold text-xs rounded-full shadow-lg transition-all flex items-center space-x-2 uppercase tracking-wider"
-          >
-            <Save className="w-4 h-4" />
-            <span>Salvar Alterações</span>
-          </button>
+          <button onClick={onReset} className="px-4 py-2 text-xs font-semibold text-rose-800 bg-rose-50 rounded-full border border-rose-200">Restaurar Originais</button>
+          <button onClick={handleSubmit} className="px-6 py-2.5 bg-rose-800 text-white font-bold text-xs rounded-full shadow-lg">Salvar Alterações</button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
-        
-        {/* Menu Lateral de Abas */}
         <div className="lg:col-span-3 space-y-2">
-          <button
-            onClick={() => setActiveTab('hero')}
-            className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${
-              activeTab === 'hero' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50'
-            }`}
-          >
-            <Type className="w-4 h-4" />
-            <span>1. Hero & WhatsApp</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('about')}
-            className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${
-              activeTab === 'about' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50'
-            }`}
-          >
-            <Scissors className="w-4 h-4" />
-            <span>2. Sobre a Cléo</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('services')}
-            className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${
-              activeTab === 'services' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50'
-            }`}
-          >
-            <LayoutGrid className="w-4 h-4" />
-            <span>3. Catálogo de Peças ({formData.services.length})</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('diferenciais')}
-            className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${
-              activeTab === 'diferenciais' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50'
-            }`}
-          >
-            <Award className="w-4 h-4" />
-            <span>4. Diferenciais & CTA</span>
-          </button>
+          <button onClick={() => setActiveTab('hero')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase ${activeTab === 'hero' ? 'bg-rose-800 text-white' : 'bg-white text-amber-900'}`}>1. Hero & WhatsApp</button>
+          <button onClick={() => setActiveTab('about')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase ${activeTab === 'about' ? 'bg-rose-800 text-white' : 'bg-white text-amber-900'}`}>2. Sobre a Cléo</button>
+          <button onClick={() => setActiveTab('services')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase ${activeTab === 'services' ? 'bg-rose-800 text-white' : 'bg-white text-amber-900'}`}>3. Catálogo de Peças</button>
+          <button onClick={() => setActiveTab('diferenciais')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase ${activeTab === 'diferenciais' ? 'bg-rose-800 text-white' : 'bg-white text-amber-900'}`}>4. Diferenciais & CTA</button>
         </div>
 
-        {/* Formulário Principal */}
         <div className="lg:col-span-9">
           <form onSubmit={handleSubmit} className="bg-white border border-amber-900/10 rounded-3xl p-6 md:p-8 space-y-6 shadow-xl">
-            
-            {/* HER0 & WHATSAPP */}
             {activeTab === 'hero' && (
               <div className="space-y-4">
-                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">
-                  Configurações do Banner Principal e Contato
-                </h3>
-
+                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b">Configurações do Banner Principal</h3>
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Número do WhatsApp (com DDD)</label>
-                  <input 
-                    type="text"
-                    value={formData.header.whatsappNumber}
-                    onChange={(e) => handleChange('header', 'whatsappNumber', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm font-mono text-amber-950"
-                  />
-                  <p className="text-[10px] text-amber-800 mt-1">Exemplo: 5511999998888 (Apenas números)</p>
+                  <label className="block text-xs font-bold uppercase mb-1">WhatsApp (com DDD)</label>
+                  <input type="text" value={formData.header.whatsappNumber} onChange={(e) => handleChange('header', 'whatsappNumber', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Selo / Badge de Destaque</label>
-                  <input 
-                    type="text"
-                    value={formData.hero.badge}
-                    onChange={(e) => handleChange('hero', 'badge', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Título Principal</label>
+                  <textarea rows={2} value={formData.hero.title} onChange={(e) => handleChange('hero', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título Principal (H1)</label>
-                  <textarea 
-                    rows={2}
-                    value={formData.hero.title}
-                    onChange={(e) => handleChange('hero', 'title', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Subtítulo</label>
+                  <textarea rows={3} value={formData.hero.subtitle} onChange={(e) => handleChange('hero', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-semibold text-amber-900 uppercase mb-1">Subtítulo / Descrição</label>
-                  <textarea 
-                    rows={3}
-                    value={formData.hero.subtitle}
-                    onChange={(e) => handleChange('hero', 'subtitle', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem do Hero</label>
-                  <input 
-                    type="url"
-                    value={formData.hero.bgImage}
-                    onChange={(e) => handleChange('hero', 'bgImage', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950 mb-2"
-                  />
-                  <p className="text-xs text-amber-800 font-medium mb-1">Atalhos de Imagens do Atelier:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {CRAFT_PRESET_IMAGES.map((img, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => handleChange('hero', 'bgImage', img.url)}
-                        className="text-[11px] px-3 py-1 bg-amber-900/5 hover:bg-rose-100 text-amber-950 rounded-lg border border-amber-900/10"
-                      >
-                        {img.label}
-                      </button>
-                    ))}
-                  </div>
+                  <label className="block text-xs font-bold uppercase mb-1">URL da Imagem</label>
+                  <input type="url" value={formData.hero.bgImage} onChange={(e) => handleChange('hero', 'bgImage', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm mb-2" />
                 </div>
               </div>
             )}
 
-            {/* SOBRE */}
             {activeTab === 'about' && (
               <div className="space-y-4">
-                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">
-                  Editar História e Foto da Cléo
-                </h3>
-
+                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b">Sobre a Cléo</h3>
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título da Seção Sobre</label>
-                  <input 
-                    type="text"
-                    value={formData.about.title}
-                    onChange={(e) => handleChange('about', 'title', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Título</label>
+                  <input type="text" value={formData.about.title} onChange={(e) => handleChange('about', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Frase de Destaque / Subtítulo</label>
-                  <input 
-                    type="text"
-                    value={formData.about.subtitle}
-                    onChange={(e) => handleChange('about', 'subtitle', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Subtítulo</label>
+                  <input type="text" value={formData.about.subtitle} onChange={(e) => handleChange('about', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Primeiro Parágrafo</label>
-                  <textarea 
-                    rows={3}
-                    value={formData.about.paragraph1}
-                    onChange={(e) => handleChange('about', 'paragraph1', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Parágrafo 1</label>
+                  <textarea rows={3} value={formData.about.paragraph1} onChange={(e) => handleChange('about', 'paragraph1', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Segundo Parágrafo</label>
-                  <textarea 
-                    rows={3}
-                    value={formData.about.paragraph2}
-                    onChange={(e) => handleChange('about', 'paragraph2', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Foto da Cléo</label>
-                  <input 
-                    type="url"
-                    value={formData.about.imageUrl}
-                    onChange={(e) => handleChange('about', 'imageUrl', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
+                  <label className="block text-xs font-bold uppercase mb-1">Parágrafo 2</label>
+                  <textarea rows={3} value={formData.about.paragraph2} onChange={(e) => handleChange('about', 'paragraph2', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
                 </div>
               </div>
             )}
 
-            {/* CATÁLOGO DE SERVIÇOS */}
             {activeTab === 'services' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between pb-2 border-b border-amber-900/10">
-                  <h3 className="font-serif text-lg font-bold text-amber-950">
-                    Gerenciar Peças e Kits sob Encomenda
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={handleAddService}
-                    className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-full flex items-center space-x-1"
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>Adicionar Peça</span>
-                  </button>
+                <div className="flex items-center justify-between pb-2 border-b">
+                  <h3 className="font-serif text-lg font-bold text-amber-950">Catálogo de Peças</h3>
+                  <button type="button" onClick={handleAddService} className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-full">+ Adicionar</button>
                 </div>
-
                 <div className="space-y-6">
                   {formData.services.map((item, index) => (
-                    <div key={item.id} className="p-4 rounded-2xl bg-[#FAF7F2] border border-amber-900/10 space-y-3 relative">
+                    <div key={item.id} className="p-4 rounded-2xl bg-[#FAF7F2] border space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-rose-800 uppercase">Peça #{index + 1}</span>
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteService(item.id)}
-                          className="text-rose-700 hover:text-rose-900 p-1"
-                          title="Excluir Peça"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <span className="text-xs font-bold text-rose-800">Peça #{index + 1}</span>
+                        <button type="button" onClick={() => handleDeleteService(item.id)} className="text-rose-700">Excluir</button>
                       </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Título do Kit/Produto</label>
-                          <input 
-                            type="text"
-                            value={item.title}
-                            onChange={(e) => handleServiceChange(item.id, 'title', e.target.value)}
-                            className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Selo / Tag (Ex: Mais Pedido)</label>
-                          <input 
-                            type="text"
-                            value={item.tag}
-                            onChange={(e) => handleServiceChange(item.id, 'tag', e.target.value)}
-                            className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Descrição Breve</label>
-                        <textarea 
-                          rows={2}
-                          value={item.description}
-                          onChange={(e) => handleServiceChange(item.id, 'description', e.target.value)}
-                          className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">URL da Imagem da Peça</label>
-                        <input 
-                          type="url"
-                          value={item.imageUrl}
-                          onChange={(e) => handleServiceChange(item.id, 'imageUrl', e.target.value)}
-                          className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950"
-                        />
-                      </div>
+                      <input type="text" value={item.title} onChange={(e) => handleServiceChange(item.id, 'title', e.target.value)} className="w-full bg-white border p-2 rounded text-sm" />
+                      <textarea rows={2} value={item.description} onChange={(e) => handleServiceChange(item.id, 'description', e.target.value)} className="w-full bg-white border p-2 rounded text-sm" />
+                      <input type="url" value={item.imageUrl} onChange={(e) => handleServiceChange(item.id, 'imageUrl', e.target.value)} className="w-full bg-white border p-2 rounded text-sm" />
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* DIFERENCIAIS & CTA */}
             {activeTab === 'diferenciais' && (
               <div className="space-y-4">
-                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">
-                  Diferenciais e Chamada Final
-                </h3>
-
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título da Seção Diferenciais</label>
-                  <input 
-                    type="text"
-                    value={formData.differentials.title}
-                    onChange={(e) => handleChange('differentials', 'title', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Frase Principal do Banner Final</label>
-                  <textarea 
-                    rows={2}
-                    value={formData.ctaBanner.title}
-                    onChange={(e) => handleChange('ctaBanner', 'title', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Texto do Botão Final de WhatsApp</label>
-                  <input 
-                    type="text"
-                    value={formData.ctaBanner.buttonText}
-                    onChange={(e) => handleChange('ctaBanner', 'buttonText', e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
-                  />
-                </div>
+                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b">Diferenciais e CTA</h3>
+                <input type="text" value={formData.differentials.title} onChange={(e) => handleChange('differentials', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
+                <textarea rows={2} value={formData.ctaBanner.title} onChange={(e) => handleChange('ctaBanner', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border p-2.5 rounded-xl text-sm" />
               </div>
             )}
 
-            {/* Botão de Salvar Rodapé */}
-            <div className="pt-4 border-t border-amber-900/10 flex justify-end">
-              <button
-                type="submit"
-                className="px-8 py-3 bg-rose-800 hover:bg-rose-900 text-white font-bold text-xs rounded-full shadow-lg transition-all flex items-center space-x-2 uppercase tracking-wider"
-              >
-                <Save className="w-4 h-4" />
-                <span>Salvar Tudo</span>
-              </button>
+            <div className="pt-4 border-t flex justify-end">
+              <button type="submit" className="px-8 py-3 bg-rose-800 text-white font-bold text-xs rounded-full uppercase">Salvar Tudo</button>
             </div>
-
           </form>
         </div>
-
       </div>
-
     </div>
   );
 }
