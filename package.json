@@ -1,4 +1,5 @@
 {
+  "teste_debug_vercel": "ESTOU_LENDO_ESTE_ARQUIVO",
   "name": "landing",
   "private": true,
   "version": "0.0.0",
