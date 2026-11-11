@@ -24,7 +24,7 @@ import {
   Truck
 } from 'lucide-react';
 
-// --- DADOS ORIGINAIS COMPLETOS DO ATELIER CLÉO PEREIRA ---
+// --- DADOS COMPLETOS ORIGINAIS DO ATELIER CLÉO PEREIRA ---
 const DEFAULT_CLEO_CONTENT = {
   header: {
     atelierName: "Atelier Cléo Pereira",
@@ -34,7 +34,7 @@ const DEFAULT_CLEO_CONTENT = {
   },
   hero: {
     badge: "Feito à Mão sob Encomenda",
-    title: "Kits SPA personalizados feitos com carinho para presentear",
+    title: "Kits SPA e Jogos personalizados feitos com carinho para presentear",
     subtitle: "Peças sob encomenda para quem entende que cuidar de quem amamos começa em casa. Envio seguro para todo o Brasil.",
     ctaText: "Encomende pelo WhatsApp",
     bgImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200",
@@ -42,7 +42,7 @@ const DEFAULT_CLEO_CONTENT = {
   about: {
     title: "Olá, eu sou a Cléo Pereira",
     subtitle: "Paixão pela costura criativa e pela arte de encantar através dos detalhes.",
-    paragraph1: "No Atelier Cléo Pereira, cada costura carrega uma história. Especializada em peças funcionais e kits personalizados para o bem-estar e o lar, busco transformar tecidos selecionados em memórias afetivas.",
+    paragraph1: "No Atelier Cléo Pereira, cada costura carrega uma história. Especializada em peças funcionais, jogos de cama, mesa e kits personalizados para o bem-estar e o lar, busco transformar tecidos selecionados em memórias afetivas.",
     paragraph2: "Seja para surpreender alguém especial com um Kit SPA exclusivo ou para deixar a rotina da sua casa mais charmosa, tudo aqui é produzido artesanalmente, sob medida para a sua necessidade.",
     imageUrl: "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&q=80&w=800",
     experienceYears: "8+",
@@ -80,16 +80,16 @@ const DEFAULT_CLEO_CONTENT = {
     {
       id: "5",
       title: "Jogos Americanos & Toalhas de Chá",
-      description: "Jogos completos em tecido nobre com acabamento impecável para embelezar o momento das refeições.",
+      description: "Jogos completos em tecido nobre com acabamento impecável para embelezar o momento das refeições e do chá.",
       imageUrl: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
-      tag: "Jogos & Mesa"
+      tag: "Mesa Posta"
     },
     {
       id: "6",
       title: "Jogos de Cama & Almofadas Decorativas",
-      description: "Jogos de fronhas e almofadas personalizadas para dar um toque acolhedor e exclusivo ao quarto.",
+      description: "Jogos de fronhas e almofadas personalizadas para dar um toque acolhedor, elegante e exclusivo ao quarto.",
       imageUrl: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
-      tag: "Jogos & Lar"
+      tag: "Lar & Conforto"
     }
   ],
   forWhom: {
@@ -242,7 +242,7 @@ export default function App() {
 
   const safeContent = content || DEFAULT_CLEO_CONTENT;
 
-  // SE ESTIVER NA ROTA /acp (Painel Admin)
+  // ROTA SECRETA /acp (Painel Admin)
   if (isAdminRoute) {
     return (
       <div className="min-h-screen bg-[#FAF7F2] text-amber-950 font-sans p-4 sm:p-8">
@@ -414,7 +414,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         </div>
       </section>
 
-      {/* SERVIÇOS / JOGOS & KITS */}
+      {/* CATÁLOGO DE PEÇAS & JOGOS */}
       <section id="servicos" className="py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -444,7 +444,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         </div>
       </section>
 
-      {/* PARA QUEM */}
+      {/* PARA QUEM É */}
       <section id="para-quem" className="py-20 bg-rose-950 text-rose-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -454,9 +454,11 @@ function LandingPage({ content, getWhatsappUrl }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {forWhom.items.map((w, idx) => (
               <div key={w.id || idx} className="bg-rose-900/40 border border-rose-800/60 p-8 rounded-3xl space-y-4">
-                <Heart className="w-6 h-6 text-rose-300" />
+                <div className="w-12 h-12 rounded-2xl bg-rose-800/60 border border-rose-700/60 flex items-center justify-center text-rose-200">
+                  <Heart className="w-6 h-6 fill-rose-300" />
+                </div>
                 <h3 className="font-serif text-xl font-bold text-white">{w.title}</h3>
-                <p className="text-xs text-rose-200/80 font-light">{w.desc}</p>
+                <p className="text-xs text-rose-200/80 leading-relaxed font-light">{w.desc}</p>
               </div>
             ))}
           </div>
@@ -475,7 +477,7 @@ function LandingPage({ content, getWhatsappUrl }) {
               <div key={i} className="p-8 rounded-3xl bg-[#FAF7F2] border border-amber-900/10 space-y-4">
                 <span className="font-serif text-4xl font-bold text-rose-800/30 block">{st.step}</span>
                 <h3 className="font-serif text-lg font-bold text-amber-950">{st.title}</h3>
-                <p className="text-xs text-amber-900/70 font-light">{st.desc}</p>
+                <p className="text-xs text-amber-900/70 leading-relaxed font-light">{st.desc}</p>
               </div>
             ))}
           </div>
@@ -489,10 +491,11 @@ function LandingPage({ content, getWhatsappUrl }) {
             <div className="lg:col-span-6 space-y-6">
               <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Diferenciais do Atelier</span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{differentials.title}</h2>
+              <p className="text-sm text-amber-900/70">{differentials.subtitle}</p>
               <ul className="space-y-4 pt-2">
                 {differentials.list.map((item, index) => (
                   <li key={index} className="flex items-start space-x-3 text-xs sm:text-sm text-amber-900 font-medium">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -776,21 +779,33 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
             {activeTab === 'diferenciais' && (
               <div className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">Diferenciais e Chamada Final</h3>
+                
                 <div>
                   <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título da Seção Diferenciais</label>
                   <input type="text" value={formData.differentials.title} onChange={(e) => handleChange('differentials', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
                 </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Subtítulo dos Diferenciais</label>
+                  <input type="text" value={formData.differentials.subtitle} onChange={(e) => handleChange('differentials', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem dos Diferenciais</label>
+                  <input type="url" value={formData.differentials.imageUrl} onChange={(e) => handleChange('differentials', 'imageUrl', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                </div>
+
                 <div>
                   <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Frase Principal do Banner Final</label>
                   <textarea rows={2} value={formData.ctaBanner.title} onChange={(e) => handleChange('ctaBanner', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
                 </div>
+
                 <div>
                   <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Texto do Botão Final de WhatsApp</label>
                   <input type="text" value={formData.ctaBanner.buttonText} onChange={(e) => handleChange('ctaBanner', 'buttonText', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
                 </div>
               </div>
             )}
-
             <div className="pt-4 border-t border-amber-900/10 flex justify-end">
               <button type="submit" className="px-8 py-3 bg-rose-800 hover:bg-rose-900 text-white font-bold text-xs rounded-full shadow-lg transition-all flex items-center space-x-2 uppercase tracking-wider">
                 <Save className="w-4 h-4" />
