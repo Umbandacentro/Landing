@@ -16,7 +16,8 @@ import {
   Image as ImageIcon, 
   Type, 
   LayoutGrid, 
-  Phone, 
+  Phone,
+  Share2, 
   ExternalLink,
   ChevronRight,
   Award,
@@ -28,6 +29,20 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z" />
     <path d="M12 2C6.486 2 2 6.486 2 12c0 1.825.494 3.535 1.352 5.006L2 22l5.134-1.346A9.947 9.947 0 0012 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.182c-1.584 0-3.068-.452-4.331-1.233l-.311-.192-3.224.845.86-3.142-.211-.325A8.144 8.144 0 013.818 12c0-4.511 3.671-8.182 8.182-8.182s8.182 3.671 8.182 8.182-3.671 8.182-8.182 8.182z" />
+  </svg>
+);
+
+const FacebookIcon = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+  </svg>
+);
+
+const InstagramIcon = ({ className = "w-4 h-4" }) => (
+  <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className={className}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
   </svg>
 );
 
@@ -141,6 +156,8 @@ const DEFAULT_CLEO_CONTENT = {
   footer: {
     instagram: "@ateliercleopereira",
     instagramUrl: "https://instagram.com",
+    facebook: "/ateliercleopereira",
+    facebookUrl: "https://facebook.com",
     address: "Ateliê em São Paulo, SP - Envio para todo o Brasil",
     copyright: "© 2026 Atelier Cléo Pereira. Todos os direitos reservados."
   }
@@ -201,7 +218,8 @@ export default function App() {
         setContent({
           ...DEFAULT_CLEO_CONTENT,
           ...data.content,
-          branding: { ...DEFAULT_CLEO_CONTENT.branding, ...(data.content.branding || {}) }
+          branding: { ...DEFAULT_CLEO_CONTENT.branding, ...(data.content.branding || {}) },
+          footer: { ...DEFAULT_CLEO_CONTENT.footer, ...(data.content.footer || {}) }
         });
       }
     } catch (err) {
@@ -275,7 +293,7 @@ export default function App() {
                 <Settings className="w-6 h-6 text-rose-800" />
                 <span>Painel CMS Restrito (/acp)</span>
               </h1>
-              <p className="text-xs text-amber-900/70">Gestão completa de identidade visual, logótipo, textos, imagens e catálogo.</p>
+              <p className="text-xs text-amber-900/70">Gestão completa de identidade visual, logótipo, textos, imagens, catálogo e redes sociais.</p>
             </div>
             <a href="/" className="text-xs font-semibold text-rose-800 bg-rose-50 hover:bg-rose-100 px-4 py-2 rounded-full border border-rose-200 transition-colors">Ver Site Público</a>
           </div>
@@ -563,19 +581,25 @@ function LandingPage({ content, getWhatsappUrl }) {
             </div>
             <div>
               <p className="font-bold text-white uppercase tracking-wider mb-2">Contato & Redes</p>
-              <ul className="space-y-2">
-                <li>
-                  <a href={footer.instagramUrl} target="_blank" rel="noreferrer" className="flex items-center space-x-2 hover:text-white">
-                    <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                    </svg>
-                    <span>{footer.instagram}</span>
-                  </a>
-                </li>
+              <ul className="space-y-2.5">
+                {footer.instagram && (
+                  <li>
+                    <a href={footer.instagramUrl || "https://instagram.com"} target="_blank" rel="noreferrer" className="flex items-center space-x-2 hover:text-white transition-colors">
+                      <InstagramIcon className="w-4 h-4 text-rose-400" />
+                      <span>{footer.instagram}</span>
+                    </a>
+                  </li>
+                )}
+                {footer.facebook && (
+                  <li>
+                    <a href={footer.facebookUrl || "https://facebook.com"} target="_blank" rel="noreferrer" className="flex items-center space-x-2 hover:text-white transition-colors">
+                      <FacebookIcon className="w-4 h-4 text-blue-400" />
+                      <span>{footer.facebook}</span>
+                    </a>
+                  </li>
+                )}
                 <li className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 text-rose-400" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
                   <span>WhatsApp: {content.header?.whatsappNumber}</span>
                 </li>
               </ul>
@@ -637,7 +661,7 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
     setFormData(prev => ({
       ...prev,
       [section]: {
-        ...prev[section],
+        ...(prev[section] || {}),
         [field]: value
       }
     }));
@@ -681,6 +705,7 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
   };
 
   const safeBranding = formData.branding || DEFAULT_CLEO_CONTENT.branding;
+  const safeFooter = formData.footer || DEFAULT_CLEO_CONTENT.footer;
 
   return (
     <div className="space-y-6">
@@ -694,21 +719,25 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-3 space-y-2">
-          <button onClick={() => setActiveTab('hero')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'hero' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
+          <button type="button" onClick={() => setActiveTab('hero')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'hero' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <Type className="w-4 h-4" />
             <span>1. Hero, Logo & Tipografia</span>
           </button>
-          <button onClick={() => setActiveTab('about')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'about' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
+          <button type="button" onClick={() => setActiveTab('about')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'about' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <Scissors className="w-4 h-4" />
             <span>2. Sobre a Cléo</span>
           </button>
-          <button onClick={() => setActiveTab('services')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'services' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
+          <button type="button" onClick={() => setActiveTab('services')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'services' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <LayoutGrid className="w-4 h-4" />
             <span>3. Catálogo & Jogos ({formData.services.length})</span>
           </button>
-          <button onClick={() => setActiveTab('diferenciais')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'diferenciais' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
+          <button type="button" onClick={() => setActiveTab('diferenciais')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'diferenciais' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <Award className="w-4 h-4" />
             <span>4. Diferenciais & CTA</span>
+          </button>
+          <button type="button" onClick={() => setActiveTab('footer')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'footer' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
+            <Share2 className="w-4 h-4" />
+            <span>5. Redes Sociais & Rodapé</span>
           </button>
         </div>
 
@@ -890,6 +919,59 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
                 </div>
               </div>
             )}
+
+            {activeTab === 'footer' && (
+              <div className="space-y-6">
+                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">Redes Sociais e Rodapé</h3>
+                
+                <div className="p-4 bg-[#FAF7F2] rounded-2xl border border-amber-900/10 space-y-4">
+                  <h4 className="font-serif text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <InstagramIcon className="w-4 h-4 text-rose-700" />
+                    <span>Instagram</span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Usuário / Handle (Ex: @ateliercleopereira)</label>
+                      <input type="text" placeholder="@ateliercleopereira" value={safeFooter.instagram || ''} onChange={(e) => handleChange('footer', 'instagram', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Link Completo do Instagram</label>
+                      <input type="url" placeholder="https://instagram.com/seu_perfil" value={safeFooter.instagramUrl || ''} onChange={(e) => handleChange('footer', 'instagramUrl', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[#FAF7F2] rounded-2xl border border-amber-900/10 space-y-4">
+                  <h4 className="font-serif text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <FacebookIcon className="w-4 h-4 text-blue-700" />
+                    <span>Facebook</span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Nome da Página (Ex: /ateliercleopereira)</label>
+                      <input type="text" placeholder="/ateliercleopereira" value={safeFooter.facebook || ''} onChange={(e) => handleChange('footer', 'facebook', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Link Completo do Facebook</label>
+                      <input type="url" placeholder="https://facebook.com/sua_pagina" value={safeFooter.facebookUrl || ''} onChange={(e) => handleChange('footer', 'facebookUrl', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-2">
+                  <h4 className="font-serif text-sm font-bold text-amber-950 border-b border-amber-900/10 pb-2">Informações do Rodapé</h4>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Endereço / Localização</label>
+                    <input type="text" value={safeFooter.address || ''} onChange={(e) => handleChange('footer', 'address', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Texto de Copyright</label>
+                    <input type="text" value={safeFooter.copyright || ''} onChange={(e) => handleChange('footer', 'copyright', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="pt-4 border-t border-amber-900/10 flex justify-end">
               <button type="submit" className="px-8 py-3 bg-rose-800 hover:bg-rose-900 text-white font-bold text-xs rounded-full shadow-lg transition-all flex items-center space-x-2 uppercase tracking-wider">
                 <Save className="w-4 h-4" />
