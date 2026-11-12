@@ -24,6 +24,13 @@ import {
   Truck
 } from 'lucide-react';
 
+const WhatsAppIcon = ({ className = "w-5 h-5" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z" />
+    <path d="M12 2C6.486 2 2 6.486 2 12c0 1.825.494 3.535 1.352 5.006L2 22l5.134-1.346A9.947 9.947 0 0012 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18.182c-1.584 0-3.068-.452-4.331-1.233l-.311-.192-3.224.845.86-3.142-.211-.325A8.144 8.144 0 013.818 12c0-4.511 3.671-8.182 8.182-8.182s8.182 3.671 8.182 8.182-3.671 8.182-8.182 8.182z" />
+  </svg>
+);
+
 // --- DADOS COMPLETOS ORIGINAIS DO ATELIER CLÉO PEREIRA ---
 const DEFAULT_CLEO_CONTENT = {
   header: {
@@ -31,6 +38,12 @@ const DEFAULT_CLEO_CONTENT = {
     tagline: "Costura Criativa & Carinho em Cada Detalhe",
     whatsappNumber: "5511999998888",
     whatsappLabel: "Encomende pelo WhatsApp",
+  },
+  branding: {
+    siteName: "Atelier Cléo Pereira",
+    tagline: "COSTURA CRIATIVA & CARINHO EM CADA DETALHE",
+    logoUrl: "", 
+    fontStyle: "serif" // 'serif', 'sans', 'cursive'
   },
   hero: {
     badge: "Feito à Mão sob Encomenda",
@@ -185,7 +198,11 @@ export default function App() {
         .maybeSingle();
 
       if (data && data.content && typeof data.content === 'object') {
-        setContent(data.content);
+        setContent({
+          ...DEFAULT_CLEO_CONTENT,
+          ...data.content,
+          branding: { ...DEFAULT_CLEO_CONTENT.branding, ...(data.content.branding || {}) }
+        });
       }
     } catch (err) {
       console.warn("Usando conteúdo padrão:", err);
@@ -241,6 +258,11 @@ export default function App() {
   }
 
   const safeContent = content || DEFAULT_CLEO_CONTENT;
+  const branding = safeContent.branding || DEFAULT_CLEO_CONTENT.branding;
+
+  const fontClass = 
+    branding.fontStyle === 'sans' ? 'font-sans' :
+    branding.fontStyle === 'cursive' ? 'font-serif italic' : 'font-serif';
 
   // ROTA SECRETA /acp (Painel Admin)
   if (isAdminRoute) {
@@ -253,7 +275,7 @@ export default function App() {
                 <Settings className="w-6 h-6 text-rose-800" />
                 <span>Painel CMS Restrito (/acp)</span>
               </h1>
-              <p className="text-xs text-amber-900/70">Gestão completa de textos, imagens e catálogo sincronizada com o Supabase.</p>
+              <p className="text-xs text-amber-900/70">Gestão completa de identidade visual, logótipo, textos, imagens e catálogo.</p>
             </div>
             <a href="/" className="text-xs font-semibold text-rose-800 bg-rose-50 hover:bg-rose-100 px-4 py-2 rounded-full border border-rose-200 transition-colors">Ver Site Público</a>
           </div>
@@ -275,20 +297,28 @@ export default function App() {
 
   // SITE PÚBLICO
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-amber-950 font-sans selection:bg-rose-200 selection:text-rose-950">
+    <div className={`min-h-screen bg-[#FAF7F2] text-amber-950 selection:bg-rose-200 selection:text-rose-950 ${fontClass}`}>
       <nav className="sticky top-0 z-50 bg-[#F5EFE6]/95 backdrop-blur-md border-b border-amber-900/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-rose-700/10 border border-rose-700/30 flex items-center justify-center text-rose-800 shadow-inner">
-                <Scissors className="w-5 h-5" />
-              </div>
+              {branding.logoUrl ? (
+                <img 
+                  src={branding.logoUrl} 
+                  alt={branding.siteName || "Logo"} 
+                  className="w-12 h-12 rounded-full object-cover border border-rose-900/20 shadow-sm"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-rose-700/10 border border-rose-700/30 flex items-center justify-center text-rose-800 shadow-inner">
+                  <Scissors className="w-5 h-5" />
+                </div>
+              )}
               <div>
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-amber-950 block leading-none">
-                  {safeContent.header.atelierName}
+                <span className={`text-xl sm:text-2xl font-bold tracking-tight text-amber-950 block leading-none ${fontClass}`}>
+                  {branding.siteName || safeContent.header.atelierName}
                 </span>
                 <span className="text-[10px] sm:text-xs text-rose-800 tracking-wider uppercase font-medium">
-                  {safeContent.header.tagline}
+                  {branding.tagline || safeContent.header.tagline}
                 </span>
               </div>
             </div>
@@ -306,9 +336,9 @@ export default function App() {
                 href={getWhatsappUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md shadow-emerald-700/20 transition-all hover:scale-105"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md shadow-emerald-700/20 transition-all hover:scale-105 whitespace-nowrap"
               >
-                <MessageCircle className="w-4 h-4 fill-current" />
+                <WhatsAppIcon className="w-4 h-4" />
                 <span>{safeContent.header.whatsappLabel}</span>
               </a>
             </div>
@@ -350,7 +380,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         className="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white p-4 rounded-full shadow-2xl shadow-emerald-600/40 transition-transform hover:scale-110 flex items-center justify-center border-2 border-white"
         title="Falar no WhatsApp"
       >
-        <MessageCircle className="w-7 h-7 fill-current" />
+        <WhatsAppIcon className="w-7 h-7" />
       </a>
 
       {/* HERO */}
@@ -364,7 +394,7 @@ function LandingPage({ content, getWhatsappUrl }) {
                   <span>{hero.badge}</span>
                 </div>
               )}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-950 tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-950 tracking-tight leading-tight">
                 {hero.title}
               </h1>
               <p className="text-base sm:text-lg text-amber-900/80 max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
@@ -377,7 +407,7 @@ function LandingPage({ content, getWhatsappUrl }) {
                   rel="noreferrer"
                   className="w-full sm:w-auto px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-full shadow-xl shadow-emerald-700/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 group uppercase tracking-wider"
                 >
-                  <MessageCircle className="w-5 h-5 fill-current" />
+                  <WhatsAppIcon className="w-5 h-5" />
                   <span>{hero.ctaText}</span>
                 </a>
               </div>
@@ -403,7 +433,7 @@ function LandingPage({ content, getWhatsappUrl }) {
             </div>
             <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-bold uppercase tracking-widest text-rose-800 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">Artesã & Criadora</span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{about.title}</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-amber-950">{about.title}</h2>
               <p className="text-rose-900/80 font-medium italic text-lg">"{about.subtitle}"</p>
               <div className="space-y-4 text-amber-900/80 leading-relaxed font-light text-base">
                 <p>{about.paragraph1}</p>
@@ -419,7 +449,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Catálogo do Atelier</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">Peças, Jogos e Kits sob Encomenda</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-amber-950">Peças, Jogos e Kits sob Encomenda</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((item) => (
@@ -430,7 +460,7 @@ function LandingPage({ content, getWhatsappUrl }) {
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="font-serif text-lg font-bold text-amber-950 mb-2">{item.title}</h3>
+                    <h3 className="text-lg font-bold text-amber-950 mb-2">{item.title}</h3>
                     <p className="text-xs text-amber-900/70 font-light">{item.description}</p>
                   </div>
                   <a href={getWhatsappUrl(`Olá Cléo! Tenho interesse no ${item.title}.`)} target="_blank" rel="noreferrer" className="pt-3 border-t border-amber-900/5 flex items-center justify-between text-xs font-bold text-emerald-700">
@@ -449,7 +479,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-rose-300">Carinho em Cada Traço</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">{forWhom.title}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">{forWhom.title}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {forWhom.items.map((w, idx) => (
@@ -457,7 +487,7 @@ function LandingPage({ content, getWhatsappUrl }) {
                 <div className="w-12 h-12 rounded-2xl bg-rose-800/60 border border-rose-700/60 flex items-center justify-center text-rose-200">
                   <Heart className="w-6 h-6 fill-rose-300" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-white">{w.title}</h3>
+                <h3 className="text-xl font-bold text-white">{w.title}</h3>
                 <p className="text-xs text-rose-200/80 leading-relaxed font-light">{w.desc}</p>
               </div>
             ))}
@@ -470,13 +500,13 @@ function LandingPage({ content, getWhatsappUrl }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Passo a Passo</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{howItWorks.title}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-amber-950">{howItWorks.title}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {howItWorks.steps.map((st, i) => (
               <div key={i} className="p-8 rounded-3xl bg-[#FAF7F2] border border-amber-900/10 space-y-4">
-                <span className="font-serif text-4xl font-bold text-rose-800/30 block">{st.step}</span>
-                <h3 className="font-serif text-lg font-bold text-amber-950">{st.title}</h3>
+                <span className="text-4xl font-bold text-rose-800/30 block">{st.step}</span>
+                <h3 className="text-lg font-bold text-amber-950">{st.title}</h3>
                 <p className="text-xs text-amber-900/70 leading-relaxed font-light">{st.desc}</p>
               </div>
             ))}
@@ -490,7 +520,7 @@ function LandingPage({ content, getWhatsappUrl }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Diferenciais do Atelier</span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-amber-950">{differentials.title}</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-amber-950">{differentials.title}</h2>
               <p className="text-sm text-amber-900/70">{differentials.subtitle}</p>
               <ul className="space-y-4 pt-2">
                 {differentials.list.map((item, index) => (
@@ -512,11 +542,11 @@ function LandingPage({ content, getWhatsappUrl }) {
       <section className="py-20 bg-gradient-to-r from-rose-900 to-amber-950 text-white text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <Sparkles className="w-8 h-8 text-rose-300 mx-auto" />
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight">{ctaBanner.title}</h2>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">{ctaBanner.title}</h2>
           <p className="text-rose-200 text-base max-w-xl mx-auto font-light">{ctaBanner.subtitle}</p>
           <div className="pt-4">
             <a href={getWhatsappUrl("Olá Cléo! Quero montar meu presente sob medida!")} target="_blank" rel="noreferrer" className="inline-flex items-center space-x-3 px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-full shadow-2xl uppercase tracking-wider">
-              <MessageCircle className="w-5 h-5 fill-current" />
+              <WhatsAppIcon className="w-5 h-5" />
               <span>{ctaBanner.buttonText}</span>
             </a>
           </div>
@@ -528,7 +558,7 @@ function LandingPage({ content, getWhatsappUrl }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-amber-900/40">
             <div>
-              <p className="font-serif text-lg font-bold text-white mb-2">{content.header?.atelierName}</p>
+              <p className="text-lg font-bold text-white mb-2">{content.header?.atelierName}</p>
               <p className="text-amber-300/70 font-light">{content.header?.tagline}</p>
             </div>
             <div>
@@ -650,6 +680,8 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
     onSave(formData);
   };
 
+  const safeBranding = formData.branding || DEFAULT_CLEO_CONTENT.branding;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-amber-900/10 shadow-sm">
@@ -664,7 +696,7 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
         <div className="lg:col-span-3 space-y-2">
           <button onClick={() => setActiveTab('hero')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'hero' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <Type className="w-4 h-4" />
-            <span>1. Hero & WhatsApp</span>
+            <span>1. Hero, Logo & Tipografia</span>
           </button>
           <button onClick={() => setActiveTab('about')} className={`w-full text-left px-4 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all flex items-center space-x-2 ${activeTab === 'about' ? 'bg-rose-800 text-white shadow-md' : 'bg-white text-amber-900 hover:bg-rose-50 border border-amber-900/10'}`}>
             <Scissors className="w-4 h-4" />
@@ -683,27 +715,79 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
         <div className="lg:col-span-9">
           <form onSubmit={handleSubmit} className="bg-white border border-amber-900/10 rounded-3xl p-6 md:p-8 space-y-6 shadow-xl">
             {activeTab === 'hero' && (
-              <div className="space-y-4">
-                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">Configurações do Banner Principal e Contato</h3>
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Número do WhatsApp (com DDD)</label>
-                  <input type="text" value={formData.header.whatsappNumber} onChange={(e) => handleChange('header', 'whatsappNumber', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm font-mono text-amber-950" />
+              <div className="space-y-6">
+                <h3 className="font-serif text-lg font-bold text-amber-950 pb-2 border-b border-amber-900/10">Identidade Visual, Logo e Tipografia</h3>
+                
+                <div className="p-4 bg-[#FAF7F2] rounded-2xl border border-amber-900/10 space-y-4">
+                  <h4 className="font-serif text-sm font-bold text-amber-950">Logotipo & Cabeçalho</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Nome do Atelier</label>
+                      <input 
+                        type="text" 
+                        value={safeBranding.siteName} 
+                        onChange={(e) => handleChange('branding', 'siteName', e.target.value)} 
+                        className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Subtítulo / Slogan</label>
+                      <input 
+                        type="text" 
+                        value={safeBranding.tagline} 
+                        onChange={(e) => handleChange('branding', 'tagline', e.target.value)} 
+                        className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" 
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem do Logo</label>
+                      <input 
+                        type="url" 
+                        placeholder="https://... (deixe vazio para usar a tesoura)"
+                        value={safeBranding.logoUrl} 
+                        onChange={(e) => handleChange('branding', 'logoUrl', e.target.value)} 
+                        className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Tipo de Texto / Tipografia</label>
+                      <select 
+                        value={safeBranding.fontStyle} 
+                        onChange={(e) => handleChange('branding', 'fontStyle', e.target.value)} 
+                        className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950"
+                      >
+                        <option value="serif">Clássico Editorial (Serifado)</option>
+                        <option value="sans">Moderno & Limpo (Sem Serifa)</option>
+                        <option value="cursive">Artesanal & Delicado (Itálico)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Selo / Badge de Destaque</label>
-                  <input type="text" value={formData.hero.badge} onChange={(e) => handleChange('hero', 'badge', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título Principal (H1)</label>
-                  <textarea rows={2} value={formData.hero.title} onChange={(e) => handleChange('hero', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-amber-900 uppercase mb-1">Subtítulo / Descrição</label>
-                  <textarea rows={3} value={formData.hero.subtitle} onChange={(e) => handleChange('hero', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem do Hero</label>
-                  <input type="url" value={formData.hero.bgImage} onChange={(e) => handleChange('hero', 'bgImage', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950 mb-2" />
+
+                <div className="space-y-4 pt-2">
+                  <h4 className="font-serif text-sm font-bold text-amber-950 border-b border-amber-900/10 pb-2">Configurações do Banner Principal e Contato</h4>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Número do WhatsApp (com DDD)</label>
+                    <input type="text" value={formData.header.whatsappNumber} onChange={(e) => handleChange('header', 'whatsappNumber', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm font-mono text-amber-950" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Selo / Badge de Destaque</label>
+                    <input type="text" value={formData.hero.badge} onChange={(e) => handleChange('hero', 'badge', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Título Principal (H1)</label>
+                    <textarea rows={2} value={formData.hero.title} onChange={(e) => handleChange('hero', 'title', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-amber-900 uppercase mb-1">Subtítulo / Descrição</label>
+                    <textarea rows={3} value={formData.hero.subtitle} onChange={(e) => handleChange('hero', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem do Hero</label>
+                    <input type="url" value={formData.hero.bgImage} onChange={(e) => handleChange('hero', 'bgImage', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950 mb-2" />
+                  </div>
                 </div>
               </div>
             )}
@@ -787,12 +871,12 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
 
                 <div>
                   <label className="block text-xs font-bold text-amber-900 uppercase mb-1">Subtítulo dos Diferenciais</label>
-                  <input type="text" value={formData.differentials.subtitle} onChange={(e) => handleChange('differentials', 'subtitle', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  <input type="text" value={formData.differentials.subtitle} onChange={(e) => handleChange('differentials', 'subtitle', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-amber-900 uppercase mb-1">URL da Imagem dos Diferenciais</label>
-                  <input type="url" value={formData.differentials.imageUrl} onChange={(e) => handleChange('differentials', 'imageUrl', e.target.value)} className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
+                  <input type="url" value={formData.differentials.imageUrl} onChange={(e) => handleChange('differentials', 'imageUrl', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-xl px-4 py-2.5 text-sm text-amber-950" />
                 </div>
 
                 <div>
