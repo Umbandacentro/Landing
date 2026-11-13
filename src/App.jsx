@@ -20,6 +20,9 @@ import {
   Share2, 
   ExternalLink,
   ChevronRight,
+  ChevronLeft,
+  X,
+  ZoomIn,
   Award,
   Package,
   Truck
@@ -82,6 +85,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Kit SPA Personalizado",
       description: "Nécessaire acolchoada, toalha de rosto aveludada e faixa para cabelo combinando para seu momento de autocuidado.",
       imageUrl: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1528458909336-e7a0adfac1d5?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Mais Pedido"
     },
     {
@@ -89,6 +97,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Kit de Mesa & Cozinha",
       description: "Jogo americano impermeável, guardanapos de tecido e porta-talheres elegantes para receber quem você ama.",
       imageUrl: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1528458909336-e7a0adfac1d5?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Lançamento"
     },
     {
@@ -96,6 +109,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Touca Turbante & Acessórios",
       description: "Toucas de cetim e microfibra para cuidados capilares com acabamento impecável e elástico macio.",
       imageUrl: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Exclusivo"
     },
     {
@@ -103,6 +121,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Kit Gourmet Infantil",
       description: "Avental mini e touquinha de chef ajustáveis para momentos divertidos em família na cozinha.",
       imageUrl: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1528458909336-e7a0adfac1d5?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Infantil"
     },
     {
@@ -110,6 +133,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Jogos Americanos & Toalhas de Chá",
       description: "Jogos completos em tecido nobre com acabamento impecável para embelezar o momento das refeições e do chá.",
       imageUrl: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1528458909336-e7a0adfac1d5?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Mesa Posta"
     },
     {
@@ -117,6 +145,11 @@ const DEFAULT_CLEO_CONTENT = {
       title: "Jogos de Cama & Almofadas Decorativas",
       description: "Jogos de fronhas e almofadas personalizadas para dar um toque acolhedor, elegante e exclusivo ao quarto.",
       imageUrl: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+      gallery: [
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800"
+      ],
       tag: "Lar & Conforto"
     }
   ],
@@ -170,6 +203,16 @@ const CRAFT_PRESET_IMAGES = [
   { label: "Mesa Posta Tecido", url: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=800" },
   { label: "Acessórios SPA", url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800" },
 ];
+
+// Helper para garantir sempre array de fotos válidas
+const getProductPhotos = (item) => {
+  if (!item) return [];
+  const rawList = Array.isArray(item.gallery) && item.gallery.length > 0
+    ? [item.imageUrl, ...item.gallery]
+    : [item.imageUrl];
+  const unique = Array.from(new Set(rawList.filter(url => url && url.trim() !== '')));
+  return unique.length > 0 ? unique : [CRAFT_PRESET_IMAGES[0].url];
+};
 
 export default function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
@@ -293,7 +336,7 @@ export default function App() {
                 <Settings className="w-6 h-6 text-rose-800" />
                 <span>Painel CMS Restrito (/acp)</span>
               </h1>
-              <p className="text-xs text-amber-900/70">Gestão completa de identidade visual, logótipo, textos, imagens, catálogo e redes sociais.</p>
+              <p className="text-xs text-amber-900/70">Gestão completa de identidade visual, logótipo, textos, galeria de fotos, catálogo e redes sociais.</p>
             </div>
             <a href="/" className="text-xs font-semibold text-rose-800 bg-rose-50 hover:bg-rose-100 px-4 py-2 rounded-full border border-rose-200 transition-colors">Ver Site Público</a>
           </div>
@@ -378,6 +421,137 @@ export default function App() {
   );
 }
 
+// --- MODAL CAROUSEL DE FOTOS DO PRODUTO ---
+function GalleryModal({ product, onClose, getWhatsappUrl }) {
+  const photos = getProductPhotos(product);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') setCurrentIndex((prev) => (prev + 1) % photos.length);
+      if (e.key === 'ArrowLeft') setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [product, photos.length, onClose]);
+
+  if (!product) return null;
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % photos.length);
+  };
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  };
+
+  return (
+    <div 
+      className="fixed inset-0 z-50 bg-amber-950/85 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-amber-900/20 relative flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Cabeçalho do Modal */}
+        <div className="flex items-center justify-between px-6 py-4 bg-[#FAF7F2] border-b border-amber-900/10">
+          <div>
+            {product.tag && (
+              <span className="text-[10px] font-bold uppercase tracking-wider text-rose-800 bg-rose-100 px-2.5 py-0.5 rounded-full mr-2">
+                {product.tag}
+              </span>
+            )}
+            <h3 className="text-lg sm:text-xl font-bold text-amber-950 inline-block align-middle">
+              {product.title}
+            </h3>
+          </div>
+          <button 
+            onClick={onClose}
+            className="p-2 rounded-full bg-white hover:bg-rose-100 text-amber-950 hover:text-rose-800 transition-colors border border-amber-900/10"
+            title="Fechar Galeria"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Área Principal do Carousel */}
+        <div className="relative bg-amber-950/5 h-[320px] sm:h-[440px] flex items-center justify-center select-none overflow-hidden">
+          <img 
+            src={photos[currentIndex]} 
+            alt={`${product.title} - Foto ${currentIndex + 1}`} 
+            className="w-full h-full object-contain transition-all duration-300"
+          />
+
+          {/* Botões Anterior / Próximo */}
+          {photos.length > 1 && (
+            <>
+              <button 
+                onClick={handlePrev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 hover:bg-white text-amber-950 shadow-lg transition-transform hover:scale-110"
+                title="Foto Anterior"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button 
+                onClick={handleNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 hover:bg-white text-amber-950 shadow-lg transition-transform hover:scale-110"
+                title="Próxima Foto"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
+
+          {/* Contador de fotos */}
+          <div className="absolute bottom-3 right-3 bg-amber-950/75 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-xs">
+            {currentIndex + 1} / {photos.length}
+          </div>
+        </div>
+
+        {/* Miniaturas (Thumbnails) */}
+        {photos.length > 1 && (
+          <div className="flex items-center justify-center gap-3 py-3 px-6 bg-[#FAF7F2] border-t border-amber-900/10 overflow-x-auto">
+            {photos.map((photoUrl, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`relative w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
+                  currentIndex === idx 
+                    ? 'border-rose-700 scale-105 shadow-md' 
+                    : 'border-transparent opacity-60 hover:opacity-100'
+                }`}
+              >
+                <img src={photoUrl} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Rodapé do Modal com Descrição e CTA */}
+        <div className="p-6 bg-white border-t border-amber-900/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs sm:text-sm text-amber-900/80 font-light text-center sm:text-left">
+            {product.description}
+          </p>
+          <a 
+            href={getWhatsappUrl(`Olá Cléo! Vi as fotos do ${product.title} na galeria e gostaria de encomendar.`)} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="w-full sm:w-auto px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md flex items-center justify-center space-x-2 flex-shrink-0 transition-transform hover:scale-105"
+          >
+            <WhatsAppIcon className="w-4 h-4" />
+            <span>Encomendar Peça</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LandingPage({ content, getWhatsappUrl }) {
   const safeContent = content || {};
   const hero = safeContent.hero || {};
@@ -389,8 +563,19 @@ function LandingPage({ content, getWhatsappUrl }) {
   const ctaBanner = safeContent.ctaBanner || {};
   const footer = safeContent.footer || {};
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   return (
     <div className="relative overflow-hidden">
+      {/* Modal Carousel */}
+      {selectedProduct && (
+        <GalleryModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+          getWhatsappUrl={getWhatsappUrl} 
+        />
+      )}
+
       <a
         href={getWhatsappUrl("Olá Cléo! Vim pelo botão do site e quero saber mais sobre suas peças.")}
         target="_blank"
@@ -468,26 +653,64 @@ function LandingPage({ content, getWhatsappUrl }) {
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-rose-800">Catálogo do Atelier</span>
             <h2 className="text-3xl sm:text-4xl font-bold text-amber-950">Peças, Jogos e Kits sob Encomenda</h2>
+            <p className="text-xs sm:text-sm text-amber-900/70 font-light">Clique nas fotos para ampliar e ver mais detalhes de cada peça</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((item) => (
-              <div key={item.id} className="bg-white rounded-3xl overflow-hidden border border-amber-900/10 shadow-lg flex flex-col group">
-                <div className="relative h-56 overflow-hidden">
-                  <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  {item.tag && <span className="absolute top-3 right-3 bg-rose-800 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-md">{item.tag}</span>}
-                </div>
-                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-amber-950 mb-2">{item.title}</h3>
-                    <p className="text-xs text-amber-900/70 font-light">{item.description}</p>
+            {services.map((item) => {
+              const photosCount = getProductPhotos(item).length;
+              return (
+                <div key={item.id} className="bg-white rounded-3xl overflow-hidden border border-amber-900/10 shadow-lg flex flex-col group">
+                  <div 
+                    onClick={() => setSelectedProduct(item)}
+                    className="relative h-56 overflow-hidden cursor-pointer"
+                    title="Clique para abrir a galeria de fotos"
+                  >
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-amber-950/0 group-hover:bg-amber-950/25 transition-colors flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 text-amber-950 text-xs font-bold px-3.5 py-2 rounded-full shadow-lg flex items-center space-x-1.5">
+                        <ZoomIn className="w-4 h-4 text-rose-800" />
+                        <span>Ver Galeria ({photosCount} fotos)</span>
+                      </span>
+                    </div>
+                    {item.tag && (
+                      <span className="absolute top-3 right-3 bg-rose-800 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shadow-md">
+                        {item.tag}
+                      </span>
+                    )}
+                    {photosCount > 1 && (
+                      <span className="absolute bottom-3 left-3 bg-amber-950/75 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full flex items-center space-x-1 backdrop-blur-xs">
+                        <ImageIcon className="w-3 h-3" />
+                        <span>+{photosCount - 1} fotos</span>
+                      </span>
+                    )}
                   </div>
-                  <a href={getWhatsappUrl(`Olá Cléo! Tenho interesse no ${item.title}.`)} target="_blank" rel="noreferrer" className="pt-3 border-t border-amber-900/5 flex items-center justify-between text-xs font-bold text-emerald-700">
-                    <span>Pedir pelo WhatsApp</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </a>
+                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-amber-950 mb-2">{item.title}</h3>
+                      <p className="text-xs text-amber-900/70 font-light">{item.description}</p>
+                    </div>
+                    <div className="pt-3 border-t border-amber-900/5 flex items-center justify-between">
+                      <button 
+                        type="button"
+                        onClick={() => setSelectedProduct(item)}
+                        className="text-xs font-semibold text-rose-800 hover:text-rose-950 flex items-center space-x-1"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>Ver Fotos</span>
+                      </button>
+                      <a href={getWhatsappUrl(`Olá Cléo! Tenho interesse no ${item.title}.`)} target="_blank" rel="noreferrer" className="flex items-center space-x-1 text-xs font-bold text-emerald-700 hover:text-emerald-800">
+                        <span>Pedir no WhatsApp</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -674,12 +897,36 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
     }));
   };
 
+  const handleGalleryChange = (serviceId, photoIndex, value) => {
+    setFormData(prev => ({
+      ...prev,
+      services: prev.services.map(item => {
+        if (item.id !== serviceId) return item;
+        const currentGallery = Array.isArray(item.gallery) && item.gallery.length >= 3
+          ? [...item.gallery]
+          : [
+              item.imageUrl || '',
+              (item.gallery && item.gallery[1]) || '',
+              (item.gallery && item.gallery[2]) || ''
+            ];
+        currentGallery[photoIndex] = value;
+        return {
+          ...item,
+          imageUrl: photoIndex === 0 ? value : item.imageUrl,
+          gallery: currentGallery
+        };
+      })
+    }));
+  };
+
   const handleAddService = () => {
+    const defaultImg = CRAFT_PRESET_IMAGES[0].url;
     const newService = {
       id: Date.now().toString(),
       title: "Nova Peça Artesanal",
       description: "Descrição detalhada do novo produto feito sob encomenda.",
-      imageUrl: CRAFT_PRESET_IMAGES[0].url,
+      imageUrl: defaultImg,
+      gallery: [defaultImg, CRAFT_PRESET_IMAGES[1].url, CRAFT_PRESET_IMAGES[2].url],
       tag: "Novo"
     };
     setFormData(prev => ({
@@ -850,41 +1097,90 @@ function AdminPanel({ content, onSave, onReset, onLogout }) {
             {activeTab === 'services' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-2 border-b border-amber-900/10">
-                  <h3 className="font-serif text-lg font-bold text-amber-950">Gerenciar Peças, Jogos e Kits sob Encomenda</h3>
+                  <div>
+                    <h3 className="font-serif text-lg font-bold text-amber-950">Gerenciar Peças, Jogos e Galeria (Carousel)</h3>
+                    <p className="text-xs text-amber-900/70">Configure até 3 fotos por produto para o carrossel interativo.</p>
+                  </div>
                   <button type="button" onClick={handleAddService} className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-full flex items-center space-x-1">
                     <Plus className="w-4 h-4" />
                     <span>Adicionar Peça/Jogo</span>
                   </button>
                 </div>
                 <div className="space-y-6">
-                  {formData.services.map((item, index) => (
-                    <div key={item.id} className="p-4 rounded-2xl bg-[#FAF7F2] border border-amber-900/10 space-y-3 relative">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-rose-800 uppercase">Item #{index + 1}</span>
-                        <button type="button" onClick={() => handleDeleteService(item.id)} className="text-rose-700 hover:text-rose-900 p-1" title="Excluir Item">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Título do Kit/Jogo</label>
-                          <input type="text" value={item.title} onChange={(e) => handleServiceChange(item.id, 'title', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
+                  {formData.services.map((item, index) => {
+                    const galleryPhotos = Array.isArray(item.gallery) && item.gallery.length >= 3
+                      ? item.gallery
+                      : [
+                          item.imageUrl || '',
+                          (item.gallery && item.gallery[1]) || '',
+                          (item.gallery && item.gallery[2]) || ''
+                        ];
+
+                    return (
+                      <div key={item.id} className="p-4 rounded-2xl bg-[#FAF7F2] border border-amber-900/10 space-y-4 relative">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-rose-800 uppercase">Item #{index + 1}</span>
+                          <button type="button" onClick={() => handleDeleteService(item.id)} className="text-rose-700 hover:text-rose-900 p-1" title="Excluir Item">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Título do Kit/Jogo</label>
+                            <input type="text" value={item.title} onChange={(e) => handleServiceChange(item.id, 'title', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Selo / Tag</label>
+                            <input type="text" value={item.tag} onChange={(e) => handleServiceChange(item.id, 'tag', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
+                          </div>
                         </div>
                         <div>
-                          <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Selo / Tag</label>
-                          <input type="text" value={item.tag} onChange={(e) => handleServiceChange(item.id, 'tag', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
+                          <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Descrição Breve</label>
+                          <textarea rows={2} value={item.description} onChange={(e) => handleServiceChange(item.id, 'description', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
+                        </div>
+
+                        {/* Galeria de 3 Fotos */}
+                        <div className="p-3 bg-white rounded-xl border border-amber-900/10 space-y-2.5">
+                          <label className="block text-[11px] font-bold text-rose-800 uppercase flex items-center space-x-1">
+                            <ImageIcon className="w-3.5 h-3.5" />
+                            <span>Galeria de Fotos (Carrossel ao Clicar)</span>
+                          </label>
+                          <div className="space-y-2">
+                            <div>
+                              <span className="text-[10px] font-semibold text-amber-900/70 uppercase block mb-0.5">Foto 1 (Capa Principal)</span>
+                              <input 
+                                type="url" 
+                                placeholder="https://..." 
+                                value={item.imageUrl || ''} 
+                                onChange={(e) => handleGalleryChange(item.id, 0, e.target.value)} 
+                                className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-lg px-3 py-1.5 text-xs text-amber-950" 
+                              />
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-semibold text-amber-900/70 uppercase block mb-0.5">Foto 2 (Detalhe / Ângulo 2)</span>
+                              <input 
+                                type="url" 
+                                placeholder="https://... (opcional)" 
+                                value={galleryPhotos[1] || ''} 
+                                onChange={(e) => handleGalleryChange(item.id, 1, e.target.value)} 
+                                className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-lg px-3 py-1.5 text-xs text-amber-950" 
+                              />
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-semibold text-amber-900/70 uppercase block mb-0.5">Foto 3 (Acabamento / Ângulo 3)</span>
+                              <input 
+                                type="url" 
+                                placeholder="https://... (opcional)" 
+                                value={galleryPhotos[2] || ''} 
+                                onChange={(e) => handleGalleryChange(item.id, 2, e.target.value)} 
+                                className="w-full bg-[#FAF7F2] border border-amber-900/10 rounded-lg px-3 py-1.5 text-xs text-amber-950" 
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">Descrição Breve</label>
-                        <textarea rows={2} value={item.description} onChange={(e) => handleServiceChange(item.id, 'description', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] font-bold text-amber-900 uppercase mb-1">URL da Imagem</label>
-                        <input type="url" value={item.imageUrl} onChange={(e) => handleServiceChange(item.id, 'imageUrl', e.target.value)} className="w-full bg-white border border-amber-900/10 rounded-lg px-3 py-2 text-sm text-amber-950" />
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
